@@ -1,9 +1,9 @@
 class dbs:
     # https://zh.wikipedia.org/wiki/ASCII
-    PUNTUATIONS_1 = ''.join(map(chr, range(32, 48)))
-    PUNTUATIONS_2 = ''.join(map(chr, range(58, 65)))
-    PUNTUATIONS_3 = ''.join(map(chr, range(123, 127)))
-    PUNTUATIONS = PUNTUATIONS_1 + PUNTUATIONS_2 + PUNTUATIONS_3
+    PUNCTUATIONS_1 = ''.join(map(chr, range(32, 48)))
+    PUNCTUATIONS_2 = ''.join(map(chr, range(58, 65)))
+    PUNCTUATIONS_3 = ''.join(map(chr, range(123, 127)))
+    PUNCTUATIONS = PUNCTUATIONS_1 + PUNCTUATIONS_2 + PUNCTUATIONS_3
     DIGITS = ''.join(map(chr, range(48, 58)))
     ALPHABETS_UPPER = ''.join(map(chr, range(65, 91)))
     ALPHABETS_LOWER = ''.join(map(chr, range(97, 123)))
