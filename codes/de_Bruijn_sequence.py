@@ -1,4 +1,7 @@
 # https://en.wikipedia.org/wiki/De_Bruijn_sequence
+import itertools
+
+
 
 class dbs:
     # https://zh.wikipedia.org/wiki/ASCII
@@ -10,6 +13,7 @@ class dbs:
     ALPHABETS_UPPER = ''.join(map(chr, range(65, 91)))
     ALPHABETS_LOWER = ''.join(map(chr, range(97, 123)))
     ALPHABETS = ALPHABETS_UPPER + ALPHABETS_LOWER
+    BINARY = '01'
 
 
     @classmethod
@@ -39,6 +43,11 @@ class dbs:
 
 
     @classmethod
+    def numbers(cls, n = 2, numbers = (0, 1)):
+        return cls._gen_sequence(numbers, n)
+
+
+    @classmethod
     def alphabets(cls, n = 2, alphabets = ALPHABETS):
         return "".join(cls._gen_sequence(alphabets, n))
 
@@ -50,9 +59,56 @@ class dbs:
 
     @classmethod
     def binary(cls, n = 2):
-        return "".join(cls._gen_sequence('01', n))
+        return "".join(cls._gen_sequence(dbs.BINARY, n))
 
 
     @classmethod
-    def numbers(cls, n = 2, numbers = (0, 1)):
-        return cls._gen_sequence(numbers, n)
+    def total_length_of_sequence(cls, sequence):
+        return sum((len(e) for e in sequence))
+
+
+
+class permutation(dbs):
+    FUNC = itertools.permutations
+
+
+    @classmethod
+    def _gen_sequence(cls, collection, n):
+        k = len(collection)
+        sequences = cls.FUNC(range(k), n)
+        return [[collection[i] for i in sequence] for sequence in sequences]
+
+
+    @classmethod
+    def alphabets(cls, n = 2, alphabets = dbs.ALPHABETS):
+        return ["".join(e) for e in cls._gen_sequence(alphabets, n)]
+
+
+    @classmethod
+    def digits(cls, n = 2, digits = dbs.DIGITS):
+        return ["".join(e) for e in cls._gen_sequence(digits, n)]
+
+
+    @classmethod
+    def binary(cls, n = 2):
+        raise NotImplementedError('Use combination_with_replacement.binary() instead.')
+
+
+
+class combination(permutation):
+    FUNC = itertools.combinations
+
+
+    @classmethod
+    def binary(cls, n = 2):
+        raise NotImplementedError('Use combination_with_replacement.binary() instead.')
+
+
+
+class combination_with_replacement(combination):
+    FUNC = itertools.combinations_with_replacement
+
+
+    @classmethod
+    def binary(cls, n = 2):
+        return ['{:0{}b}'.format(i, n) for i in range(2 ** n)]
